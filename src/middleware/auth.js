@@ -3,7 +3,7 @@ const User = require('../models/user')
 const Task = require('../models/task')
 const auth = async(req, res, next) => {
     try{
-        const token = req.headers.cookie.split(';')[1].split('=')[1]
+        const token = req.headers.cookie.split('=')[1]
         const decoded = jwt.verify(token, process.env.SECRET)
         const user = await User.findOne({_id: decoded._id, 'tokens.token': token})
         if(!user){
