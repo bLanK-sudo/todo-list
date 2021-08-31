@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const auth = require('../middleware/auth')
 const upload = require('../middleware/avatar')
 const path = require('path')
+const sharp = require('sharp')
 const fs = require('fs')
 const filePath = './avatar/'
 const User = require('../models/user')
@@ -63,15 +64,15 @@ router.get('/me', auth, async (req, res) => {
         newListItems: req.user.tasks,
         user: req.user,
         label: labelArr,
-        avatar:req.user.avatar
+        avatar:req.user.avatar.toString('base64')
     })
 })
 router.get('/profile', auth, async (req, res) => {
     const {
         name,
-        email,
-        avatar
+        email
     } = req.user
+    const avatar = req.user.avatar.toString('base64')
     res.render('profile.ejs', {
         name,
         email,
@@ -109,7 +110,7 @@ router.get('/done', auth, async (req, res) => {
         newListItems: req.user.tasks,
         user: req.user,
         label: labelArr,
-        avatar:req.user.avatar
+        avatar:req.user.avatar.toString('base64')
     })
 })
 
@@ -182,7 +183,8 @@ router.post('/avatar', auth, upload.single('avatar'), async (req, res) => {
             avatar:req.user.avatar     
         })
     }
-    req.user.avatar = req.file.filename
+    const buffer = await sharp(req.file.buffer).resize(200, 200).png().toBuffer()
+    req.user.avatar = buffer
     await req.user.save()
     res.redirect('/profile')
 }, (err, req, res, next) => {

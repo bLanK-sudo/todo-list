@@ -33,7 +33,7 @@
         <div class="main-details">
             <h1>PROFILE</h1>
             <% if(avatar){ %>
-                <img class="avat" src="/avatar/<%=avatar%>" alt="user-image">
+                <img class="avat" src="data:image;base64, <%=avatar%>" alt="user-image">
             <% }else{ %>
                 <i style="margin-left: 50px;" class="fa fa-user fa-6x"></i>
             <% } %>  

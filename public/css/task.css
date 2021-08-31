@@ -253,6 +253,11 @@ button:focus {
 .visible-grid{
     display: grid;
 }
+.avat{
+    width: 85px;
+    margin: 0;
+    border-radius: 18px;
+}
 ::-webkit-scrollbar {
     width: 10px;
 }

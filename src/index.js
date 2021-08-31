@@ -11,6 +11,4 @@ app.use(express.static(publicDir))
 app.use(userRouter)
 app.use(taskRouter)
 
-
-
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
